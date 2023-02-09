@@ -36,6 +36,8 @@ $ yarn install
 
 ## Running the app
 
+NOTE: This app is set to run on port 4200 (instead of conventional 3000).
+
 ```bash
 # development
 $ yarn run start
