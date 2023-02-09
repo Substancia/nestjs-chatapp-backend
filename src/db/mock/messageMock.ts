@@ -4,7 +4,7 @@ const messagesMock = [
     messages: [
       {
         author: 'sentienta',
-        message: 'poda myre',
+        message: 'first message!',
         timestamp: Date.now(),
       },
     ],

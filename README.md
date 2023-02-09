@@ -24,6 +24,8 @@
 
 ## Description
 
+Sample ChatApp backend server written in NestJS for educational purposes
+
 [Nest](https://github.com/nestjs/nest) framework TypeScript starter repository.
 
 ## Installation
@@ -43,6 +45,75 @@ $ yarn run start:dev
 
 # production mode
 $ yarn run start:prod
+```
+
+## API Documentation
+
+`/user/login` - API to login an existing user
+```typescript
+// Request payload
+{
+  username: string; // try 'sentienta'
+  password: string; // try 'asd'
+}
+// Response payload
+{
+  authStatus: boolean;
+  description: string;
+  accessToken: string | undefined;
+}
+```
+
+`/user/signup` - API to signup a new user
+```typescript
+// Request payload
+{
+  username: string;
+  password: string;
+}
+// Response payload
+{
+  status: string; // 'success' | 'failed'
+}
+```
+
+`/message/fetch` - API to fetch messages
+```typescript
+// Request payload
+{
+  chatId: string; // value 'main_group_chat' exists in the mock
+}
+// Request headers
+{
+  'x-access-token': string; // accessToken fetched from login API
+}
+// Response payload
+{
+  messages: {
+    author: string;
+    message: string;
+    timestamp: number;
+  }[]
+}
+```
+
+`/message/send` - API to send messages
+```typescript
+// Request payload
+{
+  chatId: string; // value 'main_group_chat' exists in the mock
+  author: string;
+  message: string;
+  timestamp: number;
+}
+// Request headers
+{
+  'x-access-token': string; // accessToken fetched from login API
+}
+// Response payload
+{
+  status: string; // 'success' | 'failed'
+}
 ```
 
 ## Test
