@@ -51,7 +51,7 @@ $ yarn run start:prod
 
 ## API Documentation
 
-`/user/login` - API to login an existing user
+POST `/user/login` - API to login an existing user
 ```typescript
 // Request payload
 {
@@ -66,7 +66,7 @@ $ yarn run start:prod
 }
 ```
 
-`/user/signup` - API to signup a new user
+POST `/user/signup` - API to signup a new user
 ```typescript
 // Request payload
 {
@@ -79,7 +79,7 @@ $ yarn run start:prod
 }
 ```
 
-`/message/fetch` - API to fetch messages
+GET `/message/fetch` - API to fetch messages
 ```typescript
 // Request payload
 {
@@ -99,7 +99,7 @@ $ yarn run start:prod
 }
 ```
 
-`/message/send` - API to send messages
+POST `/message/send` - API to send messages
 ```typescript
 // Request payload
 {
