@@ -11,7 +11,7 @@ export class MessageController {
     this.messageService.sendMessage(request, response);
   }
 
-  @Get('fetch')
+  @Post('fetch')
   fetch(@Req() request: Request, @Res() response: Response): void {
     this.messageService.fetchMessages(request, response);
   }
