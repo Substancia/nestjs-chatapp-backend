@@ -79,7 +79,7 @@ POST `/user/signup` - API to signup a new user
 }
 ```
 
-GET `/message/fetch` - API to fetch messages
+POST `/message/fetch` - API to fetch messages
 ```typescript
 // Request payload
 {
