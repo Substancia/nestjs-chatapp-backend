@@ -28,9 +28,11 @@ export class MessageService {
     const { chatId } = req.body;
     if (chatId) {
       const messageObj = fetchMessagesMock(chatId);
-      console.log('Message fetched successfully!');
-      res.json({ messages: messageObj.messages });
-      return;
+      if (messageObj) {
+        console.log('Message fetched successfully!');
+        res.json({ messages: messageObj.messages });
+        return;
+      }
     }
 
     console.log('Message fetch failed!');

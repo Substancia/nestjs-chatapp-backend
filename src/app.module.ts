@@ -8,6 +8,8 @@ import { MessageController } from './message/message.controller';
 import { MessageService } from './message/message.service';
 import { AuthMiddleware } from './common/middleware/auth.middleware';
 import { JwtModule } from '@nestjs/jwt';
+import { ChatController } from './chat/chat.controller';
+import { ChatService } from './chat/chat.service';
 
 @Module({
   imports: [
@@ -16,8 +18,13 @@ import { JwtModule } from '@nestjs/jwt';
       isGlobal: true,
     }),
   ],
-  controllers: [AppController, UserController, MessageController],
-  providers: [AppService, AuthService, MessageService],
+  controllers: [
+    AppController,
+    UserController,
+    MessageController,
+    ChatController,
+  ],
+  providers: [AppService, AuthService, MessageService, ChatService],
 })
 export class AppModule {
   configure(consumer: MiddlewareConsumer) {
