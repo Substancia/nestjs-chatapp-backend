@@ -25,7 +25,7 @@ const MONGO_DB = 'nestjs-chatapp';
       isGlobal: true,
     }),
     MongooseModule.forRoot(MONGO_URL+MONGO_DB),
-    // It's possible to move this line to the corresponding submodule which deals with the specific logic
+    // TODO: It's possible to move this line to the corresponding submodule which deals with the specific logic. Currently we have one module - App module for handling everything
     MongooseModule.forFeature([{ name: User.name, schema: UserSchema }])
   ],
   controllers: [
