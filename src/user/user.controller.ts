@@ -34,7 +34,7 @@ export class UserController {
 
   @Post('dbtestUser')
   async create(@Body() createUserDto: CreateUserDto) {
-    return await this.authService.create(createUserDto);
+    return await this.authService.addUser(createUserDto);
   }
 
   @Put('dbtestUser/:id')

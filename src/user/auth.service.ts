@@ -4,7 +4,6 @@ import { Model } from 'mongoose';
 import { JwtService } from '@nestjs/jwt';
 
 import { Request, Response } from 'express';
-import { addUser, getUser } from '../db/mock/usersMock';
 import { User, UserDocument } from 'src/db/schemas/user.schema';
 import { CreateUserDto } from 'src/db/dto/create-user.dto';
 import { UpdateUserDto } from 'src/db/dto/update-user.dto';
@@ -44,26 +43,44 @@ export class AuthService {
     return;
   }
 
-  createUser(req: Request, res: Response): void {
-    
-    if (
-      addUser({
+  async createUser(req: Request, res: Response): Promise<void> {
+    const userObj = await this.getUser(req.body.username);
+
+    if (!userObj) {
+      const userCount = await this.getTotalUsers();
+      console.log('Total no. of users (before signup) : ',userCount )
+      
+      await this.addUser({
+        userId: userCount,
         username: req.body.username,
         password: req.body.password,
       })
-    ) {
+      console.log('Added user : ', req.body.username)
+
       res.json({
         status: 'success',
       });
       return;
+    } else {
+      console.log('Signup attempt failed because user exists : ', userObj.username)
     }
 
-    res.status(500).json({ message: 'failed' });
+    res.status(400).json({ message: 'failed' });
     return;
   }
 
   async getUser(user: string):Promise<User>{
     return await this.model.findOne({username:user}).exec()
+  }
+
+  async addUser(createUserDto: CreateUserDto): Promise<User> {
+    return await new this.model({
+      ...createUserDto
+    }).save();
+  }
+
+  async getTotalUsers():Promise<number>{
+    return await this.model.countDocuments().exec()
   }
 
   //dbtest functions
@@ -74,12 +91,6 @@ export class AuthService {
 
   async findOne(id: string): Promise<User> {
     return await this.model.findById(id).exec();
-  }
-
-  async create(createUserDto: CreateUserDto): Promise<User> {
-    return await new this.model({
-      ...createUserDto
-    }).save();
   }
 
   async update(id: string, updateUserDto: UpdateUserDto): Promise<User> {
