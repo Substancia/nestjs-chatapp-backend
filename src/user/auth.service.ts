@@ -1,12 +1,18 @@
 import { Injectable } from '@nestjs/common';
+import { InjectModel } from '@nestjs/mongoose';
+import { Model } from 'mongoose';
 import { JwtService } from '@nestjs/jwt';
 
 import { Request, Response } from 'express';
 import { addUser, getUser } from '../db/mock/usersMock';
+import { User, UserDocument } from 'src/db/schemas/user.schema';
+import { CreateUserDto } from 'src/db/dto/create-user.dto';
+import { UpdateUserDto } from 'src/db/dto/update-user.dto';
 
 @Injectable()
 export class AuthService {
-  constructor(private readonly jwtService: JwtService) {}
+  constructor(private readonly jwtService: JwtService,
+    @InjectModel(User.name) private readonly model: Model<UserDocument>,) {}
 
   generateAuth(req: Request, res: Response): void {
     if (req.body && req.body.username && req.body.password) {
@@ -52,4 +58,30 @@ export class AuthService {
     res.status(500).json({ message: 'failed' });
     return;
   }
+
+  //dbtest functions
+
+  async findAll(): Promise<User[]> {
+    return await this.model.find().exec();
+  }
+
+  async findOne(id: string): Promise<User> {
+    return await this.model.findById(id).exec();
+  }
+
+  async create(createUserDto: CreateUserDto): Promise<User> {
+    return await new this.model({
+      ...createUserDto
+    }).save();
+  }
+
+  // async update(id: string, updateUserDto: UpdateUserDto): Promise<User> {
+  //   return await this.model.findByIdAndUpdate(id, updateUserDto).exec();
+  // }
+
+  // async delete(id: string): Promise<User> {
+  //   return await this.model.findByIdAndDelete(id).exec();
+  // }
+
+  
 }
