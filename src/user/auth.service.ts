@@ -12,15 +12,17 @@ import { UpdateUserDto } from 'src/db/dto/update-user.dto';
 @Injectable()
 export class AuthService {
   constructor(private readonly jwtService: JwtService,
-    @InjectModel(User.name) private readonly model: Model<UserDocument>,) {}
+  @InjectModel(User.name) private readonly model: Model<UserDocument>,
+  ) {}
 
-  generateAuth(req: Request, res: Response): void {
+  async generateAuth(req: Request, res: Response): Promise<void> {
     if (req.body && req.body.username && req.body.password) {
       const { username, password } = req.body;
-      const userObj = getUser({ username, password });
-
-      if (userObj) {
-        const accessToken = this.jwtService.sign(userObj, {
+      const userObj = await this.getUser(username);
+      console.log('User fetched!', userObj);
+      
+      if (userObj && userObj.password === password) {
+        const accessToken = this.jwtService.sign({username:userObj.username}, {
           // algorithm: 'RS256',
           expiresIn: 3600,
         });
@@ -43,6 +45,7 @@ export class AuthService {
   }
 
   createUser(req: Request, res: Response): void {
+    
     if (
       addUser({
         username: req.body.username,
@@ -57,6 +60,10 @@ export class AuthService {
 
     res.status(500).json({ message: 'failed' });
     return;
+  }
+
+  async getUser(user: string):Promise<User>{
+    return await this.model.findOne({username:user}).exec()
   }
 
   //dbtest functions
@@ -75,13 +82,13 @@ export class AuthService {
     }).save();
   }
 
-  // async update(id: string, updateUserDto: UpdateUserDto): Promise<User> {
-  //   return await this.model.findByIdAndUpdate(id, updateUserDto).exec();
-  // }
+  async update(id: string, updateUserDto: UpdateUserDto): Promise<User> {
+    return await this.model.findByIdAndUpdate(id, updateUserDto).exec();
+  }
 
-  // async delete(id: string): Promise<User> {
-  //   return await this.model.findByIdAndDelete(id).exec();
-  // }
+  async delete(id: string): Promise<User> {
+    return await this.model.findByIdAndDelete(id).exec();
+  }
 
   
 }

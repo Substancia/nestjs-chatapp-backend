@@ -37,13 +37,13 @@ export class UserController {
     return await this.authService.create(createUserDto);
   }
 
-  // @Put('dbtestUser/:id')
-  // async update(@Param('id') id: string, @Body() updateUserDto: UpdateUserDto) {
-  //   return await this.authService.update(id, updateUserDto);
-  // }
+  @Put('dbtestUser/:id')
+  async update(@Param('id') id: string, @Body() updateUserDto: UpdateUserDto) {
+    return await this.authService.update(id, updateUserDto);
+  }
 
-  // @Delete('dbtestUser/:id')
-  // async delete(@Param('id') id: string) {
-  //   return await this.authService.delete(id);
-  // }
+  @Delete('dbtestUser/:id')
+  async delete(@Param('id') id: string) {
+    return await this.authService.delete(id);
+  }
 }
