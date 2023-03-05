@@ -36,6 +36,7 @@ $ yarn install
 
 ## Running the app
 
+### On local machine
 NOTE: This app is set to run on port 4200 (instead of conventional 3000).
 
 ```bash
@@ -48,6 +49,9 @@ $ yarn run start:dev
 # production mode
 $ yarn run start:prod
 ```
+
+### On kubernetes
+Follow https://github.com/Substancia/kubernetes-chatapp
 
 ## API Documentation
 
