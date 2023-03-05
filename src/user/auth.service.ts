@@ -16,7 +16,7 @@ export class AuthService {
       if (userObj) {
         const accessToken = this.jwtService.sign(userObj, {
           // algorithm: 'RS256',
-          expiresIn: 3600,
+          expiresIn: 3 * 24 * 3600,
         });
 
         console.log('Authenticated', userObj.username);
