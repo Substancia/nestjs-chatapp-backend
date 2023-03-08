@@ -24,7 +24,9 @@
 
 ## Description
 
-Sample ChatApp backend server written in NestJS for educational purposes
+Sample ChatApp backend server written in NestJS for educational purposes.
+
+This is a PoC repo, the project has been moved to a monorepo at https://github.com/Substancia/REACTive-cucumber-NEST.
 
 [Nest](https://github.com/nestjs/nest) framework TypeScript starter repository.
 
